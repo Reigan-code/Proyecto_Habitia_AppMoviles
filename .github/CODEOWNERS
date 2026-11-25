@@ -1,0 +1,27 @@
+# Responsables por módulo — Habitia
+# Cada integrante revisa los cambios de su propio módulo.
+
+# Backend
+/HABITIA-Back/src/main/java/upeu/edu/pe/HABITIA_Back/auth/     @Reigan-code
+/HABITIA-Back/src/main/java/upeu/edu/pe/HABITIA_Back/modules/task/      @andrea
+/HABITIA-Back/src/main/java/upeu/edu/pe/HABITIA_Back/modules/habit/     @andrea
+/HABITIA-Back/src/main/java/upeu/edu/pe/HABITIA_Back/modules/reminder/  @andrea
+/HABITIA-Back/src/main/java/upeu/edu/pe/HABITIA_Back/modules/user/      @andrea
+/HABITIA-Back/src/main/java/upeu/edu/pe/HABITIA_Back/modules/meal/      @mayler
+/HABITIA-Back/src/main/java/upeu/edu/pe/HABITIA_Back/modules/shopping/  @mayler
+/HABITIA-Back/src/main/java/upeu/edu/pe/HABITIA_Back/modules/calendar/  @mayler
+/HABITIA-Back/src/main/java/upeu/edu/pe/HABITIA_Back/modules/diary/     @Reigan-code
+/HABITIA-Back/src/main/java/upeu/edu/pe/HABITIA_Back/modules/catalog/   @Reigan-code
+
+# Frontend (áreas transversales)
+/Habitia/shared/src/commonMain/kotlin/upeu/edu/pe/Data/remote/api/     @Reigan-code
+/Habitia/shared/src/commonMain/kotlin/upeu/edu/pe/Presentation/more/   @Reigan-code
+/Habitia/shared/src/commonMain/kotlin/upeu/edu/pe/Presentation/task/   @andrea
+/Habitia/shared/src/commonMain/kotlin/upeu/edu/pe/Presentation/food/   @mayler
+/Habitia/shared/src/commonMain/kotlin/upeu/edu/pe/Presentation/planner/@mayler
+/Habitia/shared/src/commonMain/kotlin/upeu/edu/pe/Presentation/reminders/ @andrea
+/Habitia/shared/src/commonMain/kotlin/upeu/edu/pe/Presentation/focus/  @mayler
+
+# Documentación
+/docs/        @Reigan-code
+/README.md    @Reigan-code
