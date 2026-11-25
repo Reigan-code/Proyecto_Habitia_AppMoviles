@@ -23,4 +23,8 @@ public interface HabitCompletionRepository extends JpaRepository<HabitCompletion
     // Busca un cumplimiento por su ID y verifica que el hábito asociado
     // pertenezca al usuario indicado.
     Optional<HabitCompletion> findByIdAndHabitUserId(Long completionId, Long userId);
+
+    List<HabitCompletion> findByHabitUserId(Long userId);
+
+    List<HabitCompletion> findByHabitUserIdAndDateBetween(Long userId, LocalDate inicio, LocalDate fin);
 }
