@@ -23,7 +23,26 @@ public class CalendarEventServiceImpl implements CalendarEventService{
 
     @Override
     public CalendarEvent crear(CalendarEvent calendarEvent) {
+        if (calendarEvent.getUser() != null && calendarEvent.getStartDate() != null && calendarEvent.getEndDate() != null) {
+            if (existeSolapamiento(calendarEvent.getUser().getId(),
+                    calendarEvent.getStartDate(), calendarEvent.getEndDate(), null)) {
+                throw new org.springframework.web.server.ResponseStatusException(
+                        org.springframework.http.HttpStatus.CONFLICT,
+                        "El evento se solapa con otro existente");
+            }
+        }
         return calendarEventRepository.save(calendarEvent);
+    }
+
+    @Override
+    public boolean existeSolapamiento(Long userId, LocalDateTime inicio, LocalDateTime fin, Long excluirId) {
+        if (userId == null || inicio == null || fin == null) return false;
+        List<CalendarEvent> solapados = calendarEventRepository
+                .findByUserIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(userId, fin, inicio);
+        if (excluirId != null) {
+            solapados = solapados.stream().filter(e -> !e.getId().equals(excluirId)).toList();
+        }
+        return !solapados.isEmpty();
     }
 
     @Override
@@ -33,6 +52,14 @@ public class CalendarEventServiceImpl implements CalendarEventService{
 
     @Override
     public CalendarEvent update(CalendarEvent calendarEvent) {
+        if (calendarEvent.getUser() != null && calendarEvent.getStartDate() != null && calendarEvent.getEndDate() != null) {
+            if (existeSolapamiento(calendarEvent.getUser().getId(),
+                    calendarEvent.getStartDate(), calendarEvent.getEndDate(), calendarEvent.getId())) {
+                throw new org.springframework.web.server.ResponseStatusException(
+                        org.springframework.http.HttpStatus.CONFLICT,
+                        "El evento se solapa con otro existente");
+            }
+        }
         return calendarEventRepository.save(calendarEvent);
     }
 

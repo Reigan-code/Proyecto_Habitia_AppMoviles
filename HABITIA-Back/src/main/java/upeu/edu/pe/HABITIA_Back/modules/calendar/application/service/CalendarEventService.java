@@ -17,4 +17,6 @@ public interface CalendarEventService {
             LocalDateTime inicio,
             LocalDateTime fin
     );
+
+    boolean existeSolapamiento(Long userId, LocalDateTime inicio, LocalDateTime fin, Long excluirId);
 }
