@@ -283,7 +283,7 @@ LaunchedEffect(sessionState.token, sessionState.userId) {
                 label = "ScreenTransition"
             ) { screen ->
                 when (screen) {
-                    HabitiaScreen.Splash -> SplashContent { currentScreen = HabitiaScreen.Welcome }
+                    HabitiaScreen.Splash -> SplashContent { currentScreen = if (session.isReady()) HabitiaScreen.Home else HabitiaScreen.Welcome }
                     HabitiaScreen.Welcome -> WelcomeContent { currentScreen = HabitiaScreen.Login }
                     HabitiaScreen.Login -> LoginScreen(
                         authViewModel = authViewModel, // login REAL contra el backend

@@ -87,7 +87,10 @@ fun DiaryScreen(onBack: () -> Unit, viewModel: DiaryViewModel? = null) {
         entries.add(DiaryEntry(todayLabel(), ""))
     }
 
-    val safeIndex = currentPage.coerceIn(0, entries.lastIndex)
+    if (entries.isEmpty()) {
+        entries.add(DiaryEntry(date = todayLabel(), text = ""))
+    }
+    val safeIndex = currentPage.coerceIn(0, entries.lastIndex.coerceAtLeast(0))
 
     Box(modifier = Modifier.fillMaxSize()) {
         // ══ CAPA FUENTE (hermana) para glass real ══
