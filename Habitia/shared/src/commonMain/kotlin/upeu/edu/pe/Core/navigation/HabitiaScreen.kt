@@ -17,5 +17,6 @@ sealed class HabitiaScreen{
     object More : HabitiaScreen()
     object Diary : HabitiaScreen() // Diario personal (pantalla secundaria)
     object Haabi : HabitiaScreen() // Haabi (mascota + chat dedicado)
+    object Analytics : HabitiaScreen() // Analíticas, podio y recompensas
 
 }

@@ -25,7 +25,8 @@ fun MoreScreen(
     onOpenFocus: () -> Unit,
     onOpenAppearance: (() -> Unit)? = null,
     onOpenDiary: (() -> Unit)? = null,
-    onOpenHaabi: (() -> Unit)? = null
+    onOpenHaabi: (() -> Unit)? = null,
+    onOpenAnalytics: (() -> Unit)? = null
 ) {
     // LIQUID GLASS: fuente de blur local; las tarjetas de navegación de esta
     // pantalla difuminan el fondo pastel al desplazarse la lista.
@@ -308,6 +309,29 @@ fun MoreScreen(
                                 // Color del icono -> Core/theme/Color.kt (onSurfaceVariant) o cambia tint= aqui
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
+                        }
+                    }
+                }
+            }
+            onOpenAnalytics?.let { openAnalytics ->
+                item {
+                    HabitiaGlassCard(onClick = openAnalytics, hazeState = hazeState) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(14.dp)
+                        ) {
+                            Surface(modifier = Modifier.size(44.dp), shape = CircleShape,
+                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)) {
+                                Box(contentAlignment = Alignment.Center) {
+                                    Icon(Icons.Default.Insights, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                                }
+                            }
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Analíticas y recompensas", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
+                                Text("Podio de hábitos, balance y logros", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Icon(Icons.Default.ChevronRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 }

@@ -63,6 +63,7 @@ import upeu.edu.pe.Presentation.food.FoodScreen
 import upeu.edu.pe.Presentation.food.FoodViewModel
 import upeu.edu.pe.Presentation.home.HomeScreen
 import upeu.edu.pe.Presentation.home.HomeViewModel
+import upeu.edu.pe.Presentation.more.AnalyticsScreen
 import upeu.edu.pe.Presentation.more.DiaryScreen
 import upeu.edu.pe.Presentation.more.HaabiScreen
 import upeu.edu.pe.Presentation.more.MoreScreen
@@ -101,6 +102,7 @@ fun App() {
             "diary" -> HabitiaScreen.Diary
             "haabi" -> HabitiaScreen.Haabi
             "more" -> HabitiaScreen.More
+"analytics" -> HabitiaScreen.Analytics
             "profile" -> HabitiaScreen.Profile
             else -> HabitiaScreen.Home
         }
@@ -164,6 +166,7 @@ fun App() {
         val shoppingRepo = remember { ApiShoppingRepositoryImpl(ApiClient.httpClient, session) }
         val diaryRepo = remember { ApiDiaryRepositoryImpl(ApiClient.httpClient, session) }
         val diaryViewModel = remember { upeu.edu.pe.Presentation.more.DiaryViewModel(diaryRepo) }
+        val analyticsViewModel = remember { upeu.edu.pe.Presentation.more.AnalyticsViewModel(ApiClient.httpClient, session) }
         // Acciones que Haabi puede ejecutar (crear tareas/hábitos/etc.).
         val haabiActions = remember {
             upeu.edu.pe.Presentation.more.HaabiActionsImpl(
@@ -323,7 +326,12 @@ LaunchedEffect(sessionState.token, sessionState.userId) {
                             currentScreen = HabitiaScreen.Appearance
                         },
                         onOpenDiary = { currentScreen = HabitiaScreen.Diary },
-                        onOpenHaabi = { currentScreen = HabitiaScreen.Haabi }
+                        onOpenHaabi = { currentScreen = HabitiaScreen.Haabi },
+                        onOpenAnalytics = { currentScreen = HabitiaScreen.Analytics }
+                    )
+                    HabitiaScreen.Analytics -> AnalyticsScreen(
+                        viewModel = analyticsViewModel,
+                        onBack = { currentScreen = HabitiaScreen.More }
                     )
                     HabitiaScreen.Diary -> DiaryScreen(
                         onBack = { currentScreen = HabitiaScreen.More },
