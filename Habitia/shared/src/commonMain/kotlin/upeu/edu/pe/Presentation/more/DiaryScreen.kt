@@ -35,6 +35,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -64,7 +66,7 @@ import java.util.Locale
 // Dark mode → cuaderno oscuro. Estado local (lista de entradas), ligero.
 // ═══════════════════════════════════════════════════════════════════════════
 
-private data class DiaryEntry(val date: String, val text: String)
+private data class DiaryEntry(val id: String = "", val date: String = "", val text: String = "")
 
 @Composable
 fun DiaryScreen(onBack: () -> Unit, viewModel: DiaryViewModel? = null) {
@@ -73,7 +75,15 @@ fun DiaryScreen(onBack: () -> Unit, viewModel: DiaryViewModel? = null) {
     var currentPage by remember { mutableStateOf(0) }
 
     // Inicializa con una página para hoy si no hay ninguna.
-    if (entries.isEmpty()) {
+    LaunchedEffect(viewModel) {
+        viewModel?.refresh()
+        viewModel?.entries?.collect { list ->
+            entries.clear()
+            if (list.isEmpty()) entries.add(DiaryEntry(date = todayLabel(), text = ""))
+            else entries.addAll(list.map { DiaryEntry(id = it.id, date = it.date, text = it.text) })
+        }
+    }
+    if (viewModel == null && entries.isEmpty()) {
         entries.add(DiaryEntry(todayLabel(), ""))
     }
 
@@ -241,6 +251,7 @@ fun DiaryScreen(onBack: () -> Unit, viewModel: DiaryViewModel? = null) {
                                 value = entry.text,
                                 onValueChange = { newText ->
                                     entries[idx] = entry.copy(text = newText)
+                                    viewModel?.update(entry.id, newText)
                                 },
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -285,7 +296,7 @@ fun DiaryScreen(onBack: () -> Unit, viewModel: DiaryViewModel? = null) {
                     ) { Text("Cerrar libro") }
                     Button(
                         onClick = {
-                            entries.add(DiaryEntry(todayLabel(), ""))
+                            viewModel?.addToday()
                             currentPage = entries.lastIndex
                         },
                         modifier = Modifier.weight(1f)
