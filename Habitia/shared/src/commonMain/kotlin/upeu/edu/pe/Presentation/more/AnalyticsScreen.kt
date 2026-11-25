@@ -1,11 +1,20 @@
 package upeu.edu.pe.Presentation.more
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import org.jetbrains.compose.resources.painterResource
+import habitia.shared.generated.resources.Res
+import habitia.shared.generated.resources.podium
+import habitia.shared.generated.resources.reward_coins
+import habitia.shared.generated.resources.reward_heart
+import habitia.shared.generated.resources.reward_laurel
+import habitia.shared.generated.resources.reward_medal
+import habitia.shared.generated.resources.reward_trophy
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -72,6 +81,7 @@ fun AnalyticsScreen(
                     HabitiaGlassCard(hazeState = hazeState) {
                         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                             Text("Podio de hábitos", fontWeight = FontWeight.SemiBold)
+                            Image(painterResource(Res.drawable.podium), contentDescription = null, modifier = Modifier.fillMaxWidth().height(120.dp))
                             if (podium.isEmpty()) {
                                 Text("Aún no hay hábitos completados.", style = MaterialTheme.typography.bodySmall)
                             } else {
@@ -106,8 +116,16 @@ fun AnalyticsScreen(
                         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                             Text("Recompensas", fontWeight = FontWeight.SemiBold)
                             rewards.forEach { r ->
+                                val img = when (r.code) {
+                                    "R1" -> Res.drawable.reward_laurel
+                                    "R2" -> Res.drawable.reward_medal
+                                    "R3" -> Res.drawable.reward_coins
+                                    "R4" -> Res.drawable.reward_heart
+                                    else -> Res.drawable.reward_trophy
+                                }
                                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                                    Text(r.icon, modifier = Modifier.width(32.dp))
+                                    Image(painterResource(img), contentDescription = null, modifier = Modifier.size(32.dp))
+                                    Spacer(Modifier.width(8.dp))
                                     Column(Modifier.weight(1f)) {
                                         Text(r.title, fontWeight = FontWeight.Medium)
                                         Text(r.description, style = MaterialTheme.typography.bodySmall)
